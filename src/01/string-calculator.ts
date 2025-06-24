@@ -29,7 +29,13 @@ export function add(input: string): number {
     throw new Error(`negatives not allowed: ${negativeNumbers.join(", ")}`)
   }
 
-  const total = numbers.reduce((sum, n) => sum + n, 0)
+  const total = numbers.reduce((sum, n) => {
+    if (n > 1000) {
+      return sum
+    }
+
+    return sum + n
+  }, 0)
 
   return total
 }
