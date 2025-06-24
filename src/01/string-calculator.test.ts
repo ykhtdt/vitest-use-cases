@@ -30,6 +30,11 @@ import { add } from "./string-calculator"
  *    예: add("1,-2") => Error: negatives not allowed: -2
  *    예: add("1,-2,-3") => Error: negatives not allowed: -2, -3
  * 
+ * 6. 1000을 초과하는 숫자는 무시해야 한다.
+ *    예: add("2,1001") => 2
+ * 
+ * 7. 길이 제한 없는 커스텀 구분자를 지원해야 한다.
+ *    예: add("//[***]\n1***2***3") => 6
  */
 describe("문자열 계산기", () => {
   it("1. 빈 문자열 또는 최대 두 개의 쉼표로 구분된 숫자를 처리해야 한다.", () => {
@@ -55,5 +60,14 @@ describe("문자열 계산기", () => {
   it("5. 음수가 포함된 경우 예외를 발생시키고, 예외 메시지에는 음수 목록을 포함해야 한다.", () => {
     expect(() => add("1,-2")).toThrow("negatives not allowed: -2")
     expect(() => add("1,-2,-3")).toThrow("negatives not allowed: -2, -3")
+  })
+
+  it("6. 1000을 초과하는 숫자는 무시해야 한다.", () => {
+    expect(add("2,1001")).toBe(2)
+    expect(add("2,1001,3")).toBe(5)
+  })
+
+  it("7. 길이 제한 없는 커스텀 구분자를 지원해야 한다.", () => {
+    expect(add("//[***]\n1***2***3")).toBe(6)
   })
 })
