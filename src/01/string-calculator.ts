@@ -11,10 +11,15 @@ export function add(input: string): number {
   const hasCustomDelimiter = input.startsWith("//")
 
   if (hasCustomDelimiter) {
-    const match = input.match(/^\/\/(.+)\n(.*)$/)
+    const bracketMatch = input.match(/^\/\/\[(.+)\]\n(.*)$/)
+    const simpleMatch = input.match(/^\/\/(.)\n(.*)$/)
 
-    if (match) {
-      const [, delimiter, rest] = match
+    if (bracketMatch) {
+      const [, delimiter, rest] = bracketMatch
+      delimiterPattern = new RegExp(delimiter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      numbersPart = rest
+    } else if (simpleMatch) {
+      const [, delimiter, rest] = simpleMatch
       delimiterPattern = new RegExp(delimiter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
       numbersPart = rest
     }
