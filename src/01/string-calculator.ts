@@ -1,13 +1,27 @@
 export function add(input: string): number {
-  if (input === "") {
+  const isEmptyInput = input === ""
+
+  if (isEmptyInput) {
     return 0
   }
 
-  const numbers = input.split(",")
+  let delimiterPattern = /,|\n/
+  let numbersPart = input
 
-  if (numbers.length === 1) {
-    return parseInt(numbers[0])
+  const hasCustomDelimiter = input.startsWith("//")
+
+  if (hasCustomDelimiter) {
+    const match = input.match(/^\/\/(.+)\n(.*)$/)
+
+    if (match) {
+      const [, delimiter, rest] = match
+      delimiterPattern = new RegExp(delimiter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      numbersPart = rest
+    }
   }
 
-  return numbers.reduce((sum, num) => sum + parseInt(num), 0)
+  const numbers = numbersPart.split(delimiterPattern).map(Number)
+  const total = numbers.reduce((sum, n) => sum + n, 0)
+
+  return total
 }
