@@ -21,6 +21,14 @@ export function add(input: string): number {
   }
 
   const numbers = numbersPart.split(delimiterPattern).map(Number)
+  const negativeNumbers = numbers.filter((n) => n < 0)
+
+  const hasNegativeNumber = negativeNumbers.length > 0
+
+  if (hasNegativeNumber) {
+    throw new Error(`negatives not allowed: ${negativeNumbers.join(", ")}`)
+  }
+
   const total = numbers.reduce((sum, n) => sum + n, 0)
 
   return total

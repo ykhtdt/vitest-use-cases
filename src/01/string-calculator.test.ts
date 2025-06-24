@@ -26,6 +26,10 @@ import { add } from "./string-calculator"
  * 4. 커스텀 구분자를 지원해야 한다.
  *    예: add("//;\n1;2") => 3
  * 
+ * 5. 음수가 포함된 경우 예외를 발생시키고, 예외 메시지에는 음수 목록을 포함해야 한다.
+ *    예: add("1,-2") => Error: negatives not allowed: -2
+ *    예: add("1,-2,-3") => Error: negatives not allowed: -2, -3
+ * 
  */
 describe("문자열 계산기", () => {
   it("1. 빈 문자열 또는 최대 두 개의 쉼표로 구분된 숫자를 처리해야 한다.", () => {
@@ -46,5 +50,10 @@ describe("문자열 계산기", () => {
 
   it("4. 커스텀 구분자를 지원해야 한다.", () => {
     expect(add("//;\n1;2")).toBe(3)
+  })
+
+  it("5. 음수가 포함된 경우 예외를 발생시키고, 예외 메시지에는 음수 목록을 포함해야 한다.", () => {
+    expect(() => add("1,-2")).toThrow("negatives not allowed: -2")
+    expect(() => add("1,-2,-3")).toThrow("negatives not allowed: -2, -3")
   })
 })
