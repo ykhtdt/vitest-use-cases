@@ -11,10 +11,19 @@ export function add(input: string): number {
   const hasCustomDelimiter = input.startsWith("//")
 
   if (hasCustomDelimiter) {
+    const multipleDelimitersMatch = input.match(/^\/\/(\[.+?\])+\n(.*)$/)
     const bracketMatch = input.match(/^\/\/\[(.+)\]\n(.*)$/)
     const simpleMatch = input.match(/^\/\/(.)\n(.*)$/)
 
-    if (bracketMatch) {
+    if (multipleDelimitersMatch) {
+      const [, , rest] = multipleDelimitersMatch
+      const delimiters = input.slice(2, input.indexOf("\n")).match(/\[([^\]]+)\]/g)
+      if (delimiters) {
+        const escapedDelimiters = delimiters.map(d => d.slice(1, -1).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+        delimiterPattern = new RegExp(escapedDelimiters.join("|"))
+      }
+      numbersPart = rest
+    } else if (bracketMatch) {
       const [, delimiter, rest] = bracketMatch
       delimiterPattern = new RegExp(delimiter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
       numbersPart = rest
