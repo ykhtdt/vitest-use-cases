@@ -22,6 +22,7 @@ export function add(input: string): number {
 
 /**
  * 문자열이 비어있는지 확인
+ * 
  * @param string - 검사할 문자열
  * @returns 문자열이 비어있으면 true, 아니면 false
  */
@@ -29,6 +30,7 @@ const isEmpty = (string: string): boolean => !string.length
 
 /**
  * 숫자가 유효한지 확인 (1000 이하인지)
+ * 
  * @param number - 검사할 숫자
  * @returns 1000 이하면 true, 아니면 false
  */
@@ -36,6 +38,7 @@ const isValidNumber = (number: number): boolean => number <= 1000
 
 /**
  * 입력 문자열이 커스텀 구분자를 포함하는지 확인
+ * 
  * @param input - 검사할 문자열
  * @returns 커스텀 구분자가 있으면 true, 아니면 false
  */
@@ -43,13 +46,15 @@ const isCustomDelimiter = (input: string): boolean => input.startsWith("//")
 
 /**
  * 정규식 특수문자를 이스케이프 처리
- * @param str - 이스케이프할 문자열
+ * 
+ * @param string - 이스케이프할 문자열
  * @returns 이스케이프된 문자열
  */
-const escapeRegex = (str: string): string => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+const escapeRegex = (string: string): string => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 
 /**
  * 커스텀 구분자 문자열에서 대괄호로 둘러싸인 구분자들을 추출
+ * 
  * @param input - 커스텀 구분자가 포함된 입력 문자열
  * @returns 추출된 구분자 배열
  */
@@ -69,6 +74,7 @@ const PATTERNS = {
 
 /**
  * 여러 개의 구분자가 있는 경우 처리
+ * 
  * @param input - 커스텀 구분자가 포함된 입력 문자열
  * @returns [구분자 정규식, 숫자 부분 문자열]
  */
@@ -81,6 +87,7 @@ const handleMultipleDelimiters = (input: string): [RegExp, string] => {
 
 /**
  * 대괄호로 둘러싸인 단일 구분자 처리
+ * 
  * @param input - 커스텀 구분자가 포함된 입력 문자열
  * @returns [구분자 정규식, 숫자 부분 문자열]
  */
@@ -91,6 +98,7 @@ const handleBracketDelimiter = (input: string): [RegExp, string] => {
 
 /**
  * 단일 문자 구분자 처리
+ * 
  * @param input - 커스텀 구분자가 포함된 입력 문자열
  * @returns [구분자 정규식, 숫자 부분 문자열]
  */
@@ -101,6 +109,7 @@ const handleSimpleDelimiter = (input: string): [RegExp, string] => {
 
 /**
  * 입력 문자열에서 구분자 패턴과 숫자 부분을 추출
+ * 
  * @param input - 커스텀 구분자가 포함된 입력 문자열
  * @returns [구분자 정규식, 숫자 부분 문자열]
  */
@@ -122,17 +131,20 @@ const parseDelimiterPattern = (input: string): [RegExp, string] => {
 
 /**
  * 문자열을 구분자로 분리하여 숫자 배열로 변환
+ * 
  * @param input - 숫자가 포함된 문자열
  * @param pattern - 구분자 정규식
  * @returns 숫자 배열 (NaN 값은 제외)
  */
 const parseNumbers = (input: string, pattern: RegExp): number[] => {
   const result = input.split(pattern).map(Number)
+
   return result.filter(n => !isNaN(n))
 }
 
 /**
  * 숫자 배열에 음수가 포함되어 있는지 검증
+ * 
  * @param numbers - 검증할 숫자 배열
  * @throws {Error} 음수가 포함된 경우 예외 발생
  */
@@ -146,8 +158,8 @@ const validateNumbers = (numbers: number[]): void => {
 
 /**
  * 유효한 숫자만 합산 (1000 이하)
+ * 
  * @param numbers - 합산할 숫자 배열
  * @returns 유효한 숫자들의 합
  */
-const sumValidNumbers = (numbers: number[]): number =>
-  numbers.filter(isValidNumber).reduce((sum, n) => sum + n, 0)
+const sumValidNumbers = (numbers: number[]): number => numbers.filter(isValidNumber).reduce((sum, n) => sum + n, 0)
