@@ -9,7 +9,7 @@ interface User {
   email: string
 }
 
-function getUser(id: number): Promise<User> {
+function fetchUser(id: number): Promise<User> {
   return new Promise((resolve) => {
     setTimeout(() => {
       const user = {
@@ -22,8 +22,8 @@ function getUser(id: number): Promise<User> {
   })
 }
 
-it("get user", async () => {
-  const user = await getUser(1)
+it("fetch user", async () => {
+  const user = await fetchUser(1)
   expect(user).toEqual({
     id: 1,
     name: "Vitest1",
