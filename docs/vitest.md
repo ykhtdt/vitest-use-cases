@@ -63,7 +63,7 @@ await expect(fetchUser(999)).rejects.toThrowError(
 )
 ```
 
-## 목킹(Mocking) 관련 함수
+## 모킹(Mocking) 관련 함수
 
 ### 모듈 및 함수 모킹
 
